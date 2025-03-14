@@ -118,7 +118,8 @@ async function extractProductInfo(imei) {
       result = await (async () => {
         const browser = await puppeteerExtra.launch({
           headless: true,
-          args: ['--no-sandbox']
+          args: ['--no-sandbox', '--disable-setuid-sandbox'],
+          executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
         });
         const page = await browser.newPage();
         await page.setUserAgent(
@@ -182,7 +183,8 @@ async function extractLostStolenInfo(imei) {
       lostInfo = await (async () => {
         const browser = await puppeteerExtra.launch({
           headless: true,
-          args: ['--no-sandbox']
+          args: ['--no-sandbox', '--disable-setuid-sandbox'],
+          executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
         });
         const page = await browser.newPage();
         await page.setUserAgent(
@@ -203,6 +205,7 @@ async function extractLostStolenInfo(imei) {
 
         // Python OCR 스크립트 호출하여 캡차 텍스트 추출
         const ocrText = await new Promise((resolve, reject) => {
+          // 필요시 "python3"로 수정 가능
           exec(`python loststolen_ocr.py ${captchaPath}`, (error, stdout, stderr) => {
             if (error) {
               console.error(`Python OCR 실행 에러: ${error.message}`);
