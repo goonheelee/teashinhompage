@@ -3321,6 +3321,22 @@ input, select, textarea {
 		min-height: 100vh;
 	}
 
+	#hidden2{
+		transition: opacity 1s ease, transform 1s ease;
+	}
+
+	#hidden2.hidden {
+    transform: translateY(2rem);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+    visibility: hidden;
+}
+body.is-preload #hidden2 {
+	transform: translateY(2rem);
+	opacity: 0;
+}
+
+
 		#intro input, #intro select, #intro textarea {
 			color: #ffffff;
 		}
